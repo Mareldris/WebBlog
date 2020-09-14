@@ -42,6 +42,18 @@ public class BlogController {
         return "redirect:/blog";
     }
 
+    @PostMapping("filter")
+    public String BlogFilter(@RequestParam String filter,  Model model) {
+        Iterable<Post> posts;
+        if (filter != null && !filter.isEmpty()){
+            posts= postRepository.findByTitle(filter); }
+        else{
+            posts = postRepository.findAll();
+        }
+        model.addAttribute("posts",posts);
+        return "blog-main";
+    }
+
     @GetMapping("/blog/{id}")
     public String BlogDetails(@PathVariable(value = "id") long id, Model model) {
         if (!postRepository.existsById(id)){
