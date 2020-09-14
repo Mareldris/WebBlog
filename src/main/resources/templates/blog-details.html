@@ -4,6 +4,15 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 <link rel="stylesheet" type="text/css" href="buttons/blubtn.css">
+<style>
+    .col {
+        background: #f0f0f0; /* Цвет фона */
+        width: 1200px; /* Ширина блока */
+        padding: 10px; /* Поля */
+        font-size: 1em; /* Размер шрифта */
+        word-wrap: break-word; /* Перенос слов */
+    }
+</style>
 </head>
 <body>
 <header th:insert="blocks/header"></header>
@@ -13,17 +22,19 @@
         <h1 th:text="${el.title}"/>
         <h3 th:text="${el.anons}"/>
         <p  th:text="${el.full_text}"/>
-        <p><b>Просмотры:  </b><span th:text="${el.views}"/></p>
+        <p style="position: absolute; bottom: 0px; left: 100px"><b>Просмотры:  </b><span th:text="${el.views}"/></p>
 
         <br>
         <br>
 
         <div class="container">
             <a th:href="'/blog/'+${el.id}+'/edit'">
-                <button class="button button-warning">Редактировать</button></a>
+                <button class="button button-warning"
+                        style="position: relative; top: 30px; left: 850px">Редактировать</button></a>
 
             <form th:action="'/blog/'+${el.id}+'/remove'"class="button button-warning" method="post">
-                <button class="button button-warning" type="submit">Удалить</button>
+                <button class="button button-warning" type="submit"
+                        style="position: relative; top: 0px; left: 1000px;">Удалить</button>
             </form>
         </div>
     </div>

@@ -8,12 +8,14 @@
 <body>
 <header th:insert="blocks/header"></header>
 <div class="container mt-5">
+
     <h1>Блог сайта</h1>
 
     <div th:each=" el : ${posts}"  class="alert alert-info mt-2">
         <h3 th:text="${el.title}"/>
         <p th:text="${el.anons}"/>
-        <a th:href="'/blog/' + ${el.id} " class="button button-warning">Подробнее</a>
+        <a th:href="'/blog/' + ${el.id} " style="position: relative; top: 0px; left: 1000px;"
+           class="button button-warning">Подробнее</a>
     </div>
 </div>
 
