@@ -12,10 +12,10 @@ public class MainController {
         model.addAttribute("title", "Главная страница");
         return "home";
     }
-    @GetMapping("/blog")
+    @GetMapping("/about")
     public String blogMain(Model model) {
         model.addAttribute("title", "Привет!");
-        return "/blog-main";
+        return "about";
     }
 
 }
