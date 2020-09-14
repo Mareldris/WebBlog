@@ -1,0 +1,38 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<title>Блог Сайта</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+<link rel="stylesheet" type="text/css" href="buttons/blubtn.css">
+</head>
+<body>
+<header th:insert="blocks/header"></header>
+<div class="container mt-5">
+    <h1>Блог сайта</h1>
+    <div th:each=" el : ${post}"  class="alert alert-info mt-2 col">
+        <h1 th:text="${el.title}"/>
+        <h3 th:text="${el.anons}"/>
+        <p  th:text="${el.full_text}"/>
+        <p><b>Просмотры:  </b><span th:text="${el.views}"/></p>
+
+        <br>
+        <br>
+
+        <div class="container">
+            <a th:href="'/blog/'+${el.id}+'/edit'">
+                <button class="button button-warning">Редактировать</button></a>
+
+            <form th:action="'/blog/'+${el.id}+'/remove'"class="button button-warning" method="post">
+                <button class="button button-warning" type="submit">Удалить</button>
+            </form>
+        </div>
+    </div>
+</div>
+
+<br>
+<br>
+<br>
+
+<footer th:insert="blocks/footer"></footer>
+</body>
+</html>

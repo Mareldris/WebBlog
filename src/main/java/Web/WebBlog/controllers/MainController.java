@@ -13,7 +13,7 @@ public class MainController {
         return "home";
     }
     @GetMapping("/about")
-    public String blogMain(Model model) {
+    public String aboutBlog(Model model) {
         model.addAttribute("title", "Привет!");
         return "about";
     }
