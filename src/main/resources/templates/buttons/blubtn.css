@@ -1,0 +1,30 @@
+a.blubtn {
+    width:120px;
+    text-align:center;
+    display:block;
+    font-family: arial;
+    text-decoration: none;
+    font-weight: 300;
+    font-size: 14px;
+    border: #1071FF 1px solid;
+    color: #1071FF;
+    padding: 3px;
+    padding-left: 5px;
+    padding-right: 5px;
+    margin: 20px auto;
+    transition: .5s;
+    border-radius: 0px;
+}
+a.blubtn:hover {
+    top: 5px;
+    transition: .5s;
+    color: #10FF58;
+    border: #10FF58 1px solid;
+    border-radius: 10px;
+}
+a.blubtn:active {
+    color: #000;
+    border: #1A1A1A 1px solid;
+    transition: .07s;
+    background-color: #FFF;
+}

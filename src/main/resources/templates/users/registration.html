@@ -1,0 +1,33 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Блог Сайта</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<header th:insert="blocks/header"></header>
+<div class="container mt-5">
+    <h1>Авторизация</h1>
+    <div th:if="${param.error}">
+        Invalid username and password.
+    </div>
+    <div th:if="${param.logout}">
+        You have been logged out.
+    </div>
+    <form th:action="@{registration}" method="post">
+        <div><label> <input type="text" name="username" placeholder="Введите логин" class="form-control"></label></div>
+        <br>
+        <div><label><input type="text" name="password" placeholder="Введите пароль" class="form-control"></label></div>
+        <br>
+
+        <button type="submit" class="btn btn-success">Авторизоваться</button>
+        <br>
+        <br>
+        <br>
+
+        <button type="submit" class="btn btn-success">Авторизоваться</button>
+    </form>
+</div>
+<footer th:insert="blocks/footer"></footer>
+</body>
+</html>
