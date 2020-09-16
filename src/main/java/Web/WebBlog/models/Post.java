@@ -10,9 +10,14 @@ public class Post {
 
     private String title, anons, full_text ;
 
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "user_id")
+    private User author;
+
     private int views;
 
-    public Post(String title, String anons, String full_text) {
+    public Post(String title, String anons, String full_text, User user) {
+        this.author = user;
         this.title = title;
         this.anons = anons;
         this.full_text = full_text;
@@ -65,5 +70,16 @@ public class Post {
         return views +1;
     }
 
+    public User getAuthor() {
+        return author;
+    }
+
+    public void setAuthor(User author) {
+        this.author = author;
+    }
+
+    public String getAuthorName(){
+        return  author != null? author.getUsername() : "<none>";
+    }
 }
 
