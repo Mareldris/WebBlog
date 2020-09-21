@@ -1,0 +1,33 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Список пользователей</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+
+</head>
+<header th:insert="blocks/header"></header>
+<div class="container mt-5">
+    <h1>Редактор пользователей</h1>
+    <div th:each="el : ${user}">
+        <form th:action="@{'/user/'+${el.id}+'/edit'}" method="post" name="form">
+            Логин
+            <input type="text" th:value="${el.username}" name="username"  class="form-control"><br>
+            Пароль
+            <input type="text" th:value="${el.password}" name="password"  class="form-control"><br>
+
+            <div>
+                <p3>Роли:</p3>
+                <br>
+                <div th:each="role : ${roles}">
+                <label><input th:id="${role}" type="checkbox"  th:text="${role}" th:name="roles" th:value="${role}"
+                              th:checked="${el.roles.contains(role)}"></label>
+                </div>
+            </div>
+            <input type="hidden" th:value="${el.id}" name="userId"><br>
+            <button type="submit">Сохранить</button>
+        </form>
+    </div>
+</div>
+</body>
+</html>

@@ -1,54 +1,65 @@
 package Web.WebBlog.controllers;
 
+import Web.WebBlog.models.Post;
 import Web.WebBlog.models.Role;
 import Web.WebBlog.models.User;
 import Web.WebBlog.repositorys.UserRepository;
+import org.springframework.security.access.hierarchicalroles.RoleHierarchyImpl;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
-import java.util.Collections;
+import java.util.*;
+import java.util.stream.Collectors;
 
 @Controller
+@RequestMapping("/user")
+@PreAuthorize("hasAnyAuthority('Admin')")
 public class UserController {
-
     private final UserRepository userRepository;
 
     public UserController(UserRepository userRepository) {
         this.userRepository = userRepository;
     }
 
-    @GetMapping("/login")
-    public String blogLogin(Model model) {
-
-        return "users/login";
+    @GetMapping
+    public String userList(Model model) {
+        model.addAttribute("users", userRepository.findAll());
+        return "users/userList";
     }
 
-    @PostMapping("/login")
-    public String blogUserLogin(@RequestParam String username, @RequestParam String password,
-                                Model model) {
-        User user = new User(username,password);
+    @GetMapping("/{id}/edit")
+    public String userEditForm(@PathVariable(value = "id") long id, Model model) {
+        Optional<User> user = userRepository.findById(id);
+        ArrayList<User> result = new ArrayList<>();
+        user.ifPresent(result::add);
+        model.addAttribute("user", result);
+        model.addAttribute("roles", Role.values());
+        return "/users/userEditor";
+    }
+
+    @PostMapping("/{id}/edit")
+    public String UserSave(@PathVariable(value = "id") long id,
+                           @RequestParam String username,
+                           @RequestParam String password,
+                           @RequestParam(name = "roles", required = false) String[] role,
+                           //@RequestParam("userId") User user,
+                           Model model) {
+
+        User user = userRepository.findById(id).orElseThrow(IllegalAccessError::new);
+        user.setUsername(username);
+        user.setPassword(password);
+
+        user.getRoles().clear();
+
+        if (role != null) {
+            Arrays.stream(role).forEach(r -> user.getRoles().add(Role.valueOf(r)));
+        }
+
         userRepository.save(user);
-
-        return "redirect:/";
+        return "redirect:/user";
     }
 
-    @GetMapping("/registration")
-    public String blogRegistration(Model model) {
 
-        return "users/registration";
-    }
-
-    @PostMapping("/registration")
-    public String blogUserAdd(@RequestParam String username, @RequestParam String password,
-                              Model model) {
-        User usr = new User(username,password);
-        usr.setActive(true);
-        usr.setRoles(Collections.singleton(Role.User));
-        userRepository.save(usr);
-
-        return "redirect:/blog";
-    }
 }

@@ -85,7 +85,9 @@ public class BlogController {
 
     @PostMapping("/blog/{id}/edit")
     public String BlogEditSave(@PathVariable(value = "id") long id,
-                               @RequestParam String title,@RequestParam String anons,@RequestParam String full_text,
+                               @RequestParam String title,
+                               @RequestParam String anons,
+                               @RequestParam String full_text,
                                Model model) {
         Post post = postRepository.findById(id).orElseThrow(IllegalAccessError::new);
         post.setTitle(title);

@@ -1,0 +1,32 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Список пользователей</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+
+</head>
+<header th:insert="blocks/header"></header>
+<div align="center">
+
+    <h1>Список пользователей</h1>
+    <table th:each=" el : ${users}"  class="alert alert-info mt-2">
+        <thead>
+        <tr>
+            <th>Имя</th>
+            <th>Роль</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+        <td th:text="${el.username}"/>
+        <td th:text="${el.roles}" />
+        <a th:href="'/user/' + ${el.id}+ '/edit' "
+           class="button button-warning">Изменить</a>
+        </tr>
+        </tbody>
+    </table>
+
+</div>
+</body>
+</html>
