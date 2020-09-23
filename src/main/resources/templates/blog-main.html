@@ -19,6 +19,9 @@
     <div th:each=" el : ${posts}"  class="alert alert-info mt-2">
         <h3 th:text="${el.title}"/>
         <p th:text="${el.anons}"/>
+        <div th:if="${el.filename}">
+        <img th:src="'/img/'+${el.filename}">
+        </div>
         <p th:text="'Автор: ' +${el.authorName}"/>
         <a th:href="'/blog/' + ${el.id} " style="position: relative; top: 0px; left: 1000px;"
            class="button button-warning">Подробнее</a>

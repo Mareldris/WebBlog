@@ -1,7 +1,7 @@
 package Web.WebBlog.models;
 
 import javax.persistence.*;
-
+//<img th:src="el.filename">
 @Entity
 public class Post {
     @Id
@@ -15,6 +15,8 @@ public class Post {
     private User author;
 
     private int views;
+
+    private String filename;
 
     public Post(String title, String anons, String full_text, User user) {
         this.author = user;
@@ -80,6 +82,18 @@ public class Post {
 
     public String getAuthorName(){
         return  author != null? author.getUsername() : "<none>";
+    }
+
+    public void setId(long id) {
+        this.id = id;
+    }
+
+    public String getFilename() {
+        return filename;
+    }
+
+    public void setFilename(String filename) {
+        this.filename = filename;
     }
 }
 

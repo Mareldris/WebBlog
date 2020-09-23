@@ -22,6 +22,10 @@
         <h1 th:text="${el.title}"/>
         <h3 th:text="${el.anons}"/>
         <p  th:text="${el.full_text}"/>
+
+        <div th:if="${el.filename}">
+        <img th:src="'/img/'+${el.filename}">
+        </div>
         <p style="position: absolute; bottom: 0px; left: 100px"><b>Просмотры:  </b><span th:text="${el.views}"/></p>
 
         <br>

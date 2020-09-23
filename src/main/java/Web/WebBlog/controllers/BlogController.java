@@ -3,6 +3,7 @@ package Web.WebBlog.controllers;
 import Web.WebBlog.models.Post;
 import Web.WebBlog.models.User;
 import Web.WebBlog.repositorys.PostRepository;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -10,9 +11,13 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Optional;
+import java.util.UUID;
 
 @Controller
 public class BlogController {
@@ -22,6 +27,9 @@ public class BlogController {
     public BlogController(PostRepository postRepository) {
         this.postRepository = postRepository;
     }
+
+    @Value("${upload.path}")
+    private String uploadPath;
 
 
     @GetMapping("/blog")
@@ -41,8 +49,11 @@ public class BlogController {
                            @RequestParam String title,
                            @RequestParam String anons,
                            @RequestParam String full_text,
-                           Model model) {
+                           @RequestParam("file") MultipartFile file,
+                           Model model) throws IOException {
         Post post = new Post(title,anons,full_text,user);
+
+        AddFile(file, post);
         postRepository.save(post);
         return "redirect:/blog";
     }
@@ -88,8 +99,12 @@ public class BlogController {
                                @RequestParam String title,
                                @RequestParam String anons,
                                @RequestParam String full_text,
-                               Model model) {
+                               @RequestParam("file") MultipartFile file,
+                               Model model) throws IOException {
         Post post = postRepository.findById(id).orElseThrow(IllegalAccessError::new);
+        deleteFile(post);
+        AddFile(file, post);
+
         post.setTitle(title);
         post.setAnons(anons);
         post.setFull_text(full_text);
@@ -97,12 +112,40 @@ public class BlogController {
         return "redirect:/blog";
     }
 
+
     @PostMapping("/blog/{id}/remove")
-    public String BlogEditRemove(@PathVariable(value = "id") long id, Model model) {
+    public String BlogEditRemove(@PathVariable(value = "id") long id,
+                                 Model model) {
+
         Post post = postRepository.findById(id).orElseThrow(IllegalAccessError::new);
+
+        deleteFile(post);
+
         postRepository.delete(post);
         return "redirect:/blog";
     }
 
+    private void AddFile(@RequestParam("file") MultipartFile file, Post post) throws IOException {
+        if (file!=null && !file.getOriginalFilename().isEmpty()){
+            File uploadDir = new File(uploadPath);
 
+            if (uploadDir.exists()){
+                uploadDir.mkdir();
+            }
+
+            String uuidFile = UUID.randomUUID().toString();
+
+            String resultFileName = uuidFile + "." + file.getOriginalFilename();
+
+            file.transferTo(new File( uploadPath + "/" + resultFileName));
+
+            post.setFilename(resultFileName);
+        }
+    }
+
+    private void deleteFile(Post post){
+        File pictureFile = new File(uploadPath+"/"+post.getFilename());
+        if (!post.getFilename().isEmpty()){
+            pictureFile.delete();}
+    }
 }
