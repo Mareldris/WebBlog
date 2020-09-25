@@ -144,8 +144,11 @@ public class BlogController {
     }
 
     private void deleteFile(Post post){
-        File pictureFile = new File(uploadPath+"/"+post.getFilename());
-        if (!post.getFilename().isEmpty()){
-            pictureFile.delete();}
+        if (post.getFilename() != null) {
+            File pictureFile = new File(uploadPath + "/" + post.getFilename());
+            if (!post.getFilename().isEmpty()) {
+                pictureFile.delete();
+            }
+        }
     }
 }

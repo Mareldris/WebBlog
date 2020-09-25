@@ -18,29 +18,36 @@
 <header th:insert="blocks/header"></header>
 <div class="container mt-5">
     <h1>Блог сайта</h1>
-    <div th:each=" el : ${post}"  class="alert alert-info mt-2 col">
-        <h1 th:text="${el.title}"/>
-        <h3 th:text="${el.anons}"/>
-        <p  th:text="${el.full_text}"/>
+    <div class="card-body">
+        <div th:each=" el : ${post}"  class="card mb-3">
+            <div class="card-body">
+            <h1 class="card-title" th:text="${el.title}"/>
+            <h3 class="card-text" th:text="${el.anons}"/>
+            <p class="card-text" th:text="${el.full_text}"/>
+                <br>
+                <br>
+                <div class="container"  style="position: relative;width: 600px;">
+                    <div th:if="${el.filename}">
+                        <img th:src="'/img/'+${el.filename}" class="card-img-bottom">
+                    </div>
+                </div>
+            <p style="position: absolute; bottom: 0px; left: 100px"><b>Просмотры:  </b><span th:text="${el.views}"/></p>
 
-        <div th:if="${el.filename}">
-        <img th:src="'/img/'+${el.filename}">
+            <br>
+            <br>
+
+            <div class="container">
+                <a th:href="'/blog/'+${el.id}+'/edit'">
+                    <button class="btn btn-outline-success"
+                            style="position: relative; top: 38px; left: 800px">Редактировать</button></a>
+
+                <form th:action="'/blog/'+${el.id}+'/remove'" method="post">
+                    <button class="btn btn-outline-danger" type="submit"
+                            style="position: relative; top: 0px; left: 940px;">Удалить</button>
+                </form>
+            </div>
         </div>
-        <p style="position: absolute; bottom: 0px; left: 100px"><b>Просмотры:  </b><span th:text="${el.views}"/></p>
-
-        <br>
-        <br>
-
-        <div class="container">
-            <a th:href="'/blog/'+${el.id}+'/edit'">
-                <button class="button button-warning"
-                        style="position: relative; top: 30px; left: 850px">Редактировать</button></a>
-
-            <form th:action="'/blog/'+${el.id}+'/remove'"class="button button-warning" method="post">
-                <button class="button button-warning" type="submit"
-                        style="position: relative; top: 0px; left: 1000px;">Удалить</button>
-            </form>
-        </div>
+    </div>
     </div>
 </div>
 

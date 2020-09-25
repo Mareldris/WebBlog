@@ -8,23 +8,33 @@
 <body>
 <header th:insert="blocks/header"></header>
 <div class="container mt-5">
+    <nav class="navbar navbar-light bg-light">
+        <h1>Блог сайта</h1>
+        <form method="post"  th:action="@{filter}" class="form-inline" >
+            <input class="form-control mr-sm-2" type="search" name="filter" placeholder="Поиск" aria-label="Search">
+            <button type="submit" class="btn btn-outline-primary">Найти</button>
+        </form>
+    </nav>
 
-    <form method="post"  th:action="@{filter}" style="position: absolute; top: 130px; left: 1270px;">
-        <input type="text" name="filter">
-        <button type="submit" class="btn btn-outline-primary">Найти</button>
-    </form>
 
-    <h1>Блог сайта</h1>
-
-    <div th:each=" el : ${posts}"  class="alert alert-info mt-2">
-        <h3 th:text="${el.title}"/>
-        <p th:text="${el.anons}"/>
-        <div th:if="${el.filename}">
-        <img th:src="'/img/'+${el.filename}">
+    <div class="container mt-2">
+        <div th:each=" el : ${posts}"  class="card mb-3">
+            <div class="card-body">
+            <h3  class="card-title" th:text="${el.title}"/>
+            <p class="card-text" th:text="${el.anons}"/>
+                <br>
+                <br>
+                <div class="container"  style="position: relative;width: 600px;">
+                    <div th:if="${el.filename}">
+                        <img th:src="'/img/'+${el.filename}" class="card-img-bottom">
+                    </div>
+                </div>
+            <br>
+            <p class="card-text" /><small class="text-muted" th:text="'Автор: ' +${el.authorName}"></small>
+            <a th:href="'/blog/' + ${el.id} " style="position: relative; top: 0px; left: 888px;"
+               class="btn btn-warning">Подробнее</a>
+            </div>
         </div>
-        <p th:text="'Автор: ' +${el.authorName}"/>
-        <a th:href="'/blog/' + ${el.id} " style="position: relative; top: 0px; left: 1000px;"
-           class="button button-warning">Подробнее</a>
     </div>
 </div>
 
