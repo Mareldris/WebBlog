@@ -20,8 +20,8 @@
                 <p3>Роли:</p3>
                 <br>
                 <div th:each="role : ${roles}">
-                <label><input th:id="${role}" type="checkbox"  th:text="${role}" th:name="roles" th:value="${role}"
-                              th:checked="${el.roles.contains(role)}"></label>
+                    <label><input th:id="${role}" type="checkbox"  th:text="${role}" th:name="roles" th:value="${role}"
+                                  th:checked="${el.roles.contains(role)}"></label>
                 </div>
             </div>
             <input type="hidden" th:value="${el.id}" name="userId"><br>

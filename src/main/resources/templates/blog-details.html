@@ -21,9 +21,9 @@
     <div class="card-body">
         <div th:each=" el : ${post}"  class="card mb-3">
             <div class="card-body">
-            <h1 class="card-title" th:text="${el.title}"/>
-            <h3 class="card-text" th:text="${el.anons}"/>
-            <p class="card-text" th:text="${el.full_text}"/>
+                <h1 class="card-title" th:text="${el.title}"/>
+                <h3 class="card-text" th:text="${el.anons}"/>
+                <p class="card-text" th:text="${el.full_text}"/>
                 <br>
                 <br>
                 <div class="container"  style="position: relative;width: 600px;">
@@ -31,23 +31,23 @@
                         <img th:src="'/img/'+${el.filename}" class="card-img-bottom">
                     </div>
                 </div>
-            <p style="position: absolute; bottom: 0px; left: 100px"><b>Просмотры:  </b><span th:text="${el.views}"/></p>
+                <p style="position: absolute; bottom: 0px; left: 100px"><b>Просмотры:  </b><span th:text="${el.views}"/></p>
 
-            <br>
-            <br>
+                <br>
+                <br>
 
-            <div class="container">
-                <a th:href="'/blog/'+${el.id}+'/edit'">
-                    <button class="btn btn-outline-success"
-                            style="position: relative; top: 38px; left: 800px">Редактировать</button></a>
+                <div class="container">
+                    <a th:href="'/blog/'+${el.id}+'/edit'">
+                        <button class="btn btn-success"
+                                style="position: relative; top: 38px; left: 800px">Редактировать</button></a>
 
-                <form th:action="'/blog/'+${el.id}+'/remove'" method="post">
-                    <button class="btn btn-outline-danger" type="submit"
-                            style="position: relative; top: 0px; left: 940px;">Удалить</button>
-                </form>
+                    <form th:action="'/blog/'+${el.id}+'/remove'" method="post">
+                        <button class="btn btn-danger" type="submit"
+                                style="position: relative; top: 0px; left: 940px;">Удалить</button>
+                    </form>
+                </div>
             </div>
         </div>
-    </div>
     </div>
 </div>
 

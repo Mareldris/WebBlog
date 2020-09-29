@@ -1,9 +1,10 @@
 <!DOCTYPE HTML>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
 <head>
     <title>Блог Сайта</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+
 </head>
 <body>
 <header th:insert="blocks/header"></header>
@@ -17,11 +18,12 @@
     </nav>
 
 
+
     <div class="container mt-2">
         <div th:each=" el : ${posts}"  class="card mb-3">
             <div class="card-body">
-            <h3  class="card-title" th:text="${el.title}"/>
-            <p class="card-text" th:text="${el.anons}"/>
+                <h3  class="card-title" th:text="${el.title}"/>
+                <p class="card-text" th:text="${el.anons}"/>
                 <br>
                 <br>
                 <div class="container"  style="position: relative;width: 600px;">
@@ -29,14 +31,15 @@
                         <img th:src="'/img/'+${el.filename}" class="card-img-bottom">
                     </div>
                 </div>
-            <br>
-            <p class="card-text" /><small class="text-muted" th:text="'Автор: ' +${el.authorName}"></small>
-            <a th:href="'/blog/' + ${el.id} " style="position: relative; top: 0px; left: 888px;"
-               class="btn btn-warning">Подробнее</a>
+                <br>
+                <p class="card-text" /><small class="text-muted" th:text="'Автор: ' +${el.authorName}"></small>
+                <a th:href="'/blog/' + ${el.id} " style="position: relative; top: 0px; left: 888px;"
+                   class="btn btn-warning">Подробнее</a>
             </div>
         </div>
     </div>
 </div>
+
 
 <footer th:insert="blocks/footer"></footer>
 </body>
