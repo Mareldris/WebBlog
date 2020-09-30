@@ -16,7 +16,11 @@
     </div>
     <br>
     <div th:if="${param.logout}">
-        You have been logged out.
+        Вы вышли.
+    </div>
+
+    <div th:if="${message!=null}">
+        <h4 th:text="${message}"></h4>
     </div>
     <br>
     <form th:action="@{login}" method="post">

@@ -43,6 +43,7 @@ public class UserController {
     public String UserSave(@PathVariable(value = "id") long id,
                            @RequestParam String username,
                            @RequestParam String password,
+                           @RequestParam String email,
                            @RequestParam(name = "roles", required = false) String[] role,
                            //@RequestParam("userId") User user,
                            Model model) {
@@ -50,6 +51,7 @@ public class UserController {
         User user = userRepository.findById(id).orElseThrow(IllegalAccessError::new);
         user.setUsername(username);
         user.setPassword(password);
+        user.setEmail(email);
 
         user.getRoles().clear();
 

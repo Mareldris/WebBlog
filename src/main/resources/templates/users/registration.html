@@ -10,8 +10,16 @@
     <h1>Регистрация</h1>
     <br>
     <br>
+    <h4 th:text="${message}"></h4>
+
+    <br>
+    <br>
 
     <form th:action="@{registration}" method="post">
+        <div><label> <input type="text" name="email" placeholder="Введите email" class="form-control"
+                            style="text-align: center"></label></div>
+        <br>
+
         <div><label> <input type="text" name="username" placeholder="Введите логин" class="form-control"
                             style="text-align: center"></label></div>
         <br>

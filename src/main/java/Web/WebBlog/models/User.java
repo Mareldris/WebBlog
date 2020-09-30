@@ -17,7 +17,7 @@ import java.util.Set;
         public User() {
         }
 
-        private String username,password;
+        private String username,password,email,activationCode;
 
         private boolean active;
 
@@ -31,16 +31,10 @@ import java.util.Set;
             this.password = password;
         }
 
-        public long getId() {
-            return id;
-        }
-
-        public void setId(long id) {
-            this.id = id;
-        }
-
-        public String getUsername() {
-            return username;
+        public User(String email,String username, String password) {
+            this.email = email;
+            this.username = username;
+            this.password = password;
         }
 
         @Override
@@ -63,13 +57,26 @@ import java.util.Set;
             return isActive();
         }
 
-        public void setUsername(String username) {
-            this.username = username;
-        }
-
         @Override
         public Collection<? extends GrantedAuthority> getAuthorities() {
             return getRoles();
+        }
+
+        public long getId() {
+            return id;
+        }
+
+        public void setId(long id) {
+            this.id = id;
+        }
+
+        public String getUsername() {
+            return username;
+        }
+
+
+        public void setUsername(String username) {
+            this.username = username;
         }
 
         public String getPassword() {
@@ -93,5 +100,21 @@ import java.util.Set;
 
         public void setRoles(Set<Role> roles) {
             this.roles = roles;
+        }
+
+        public String getEmail() {
+            return email;
+        }
+
+        public void setEmail(String email) {
+            this.email = email;
+        }
+
+        public String getActivationCode() {
+            return activationCode;
+        }
+
+        public void setActivationCode(String activationCode) {
+            this.activationCode = activationCode;
         }
     }
