@@ -25,3 +25,11 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
         }
     }
 
+/*
+spring.jpa.generate-ddl=false
+        spring.jpa.properties.hibernate.dialect=org.hibernate.dialect.MySQL5InnoDBDialect
+
+        spring.flyway.baseline-on-migrate=true
+        spring.flyway.url=jdbc:mysql://localhost:3306/springblog?useUnicode=true&serverTimezone=UTC&useSSL=false
+        spring.flyway.user=root
+        spring.flyway.password=root*/

@@ -5,7 +5,8 @@ import javax.persistence.*;
 @Entity
 public class Post {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(generator = "SEQUENCE_POST", strategy = GenerationType.SEQUENCE)
+    @SequenceGenerator(name = "SEQUENCE_POST", sequenceName = "SO.SEQUENCE_POST",allocationSize=1)
     private long id;
 
     private String title, anons, full_text ;
