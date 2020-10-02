@@ -42,13 +42,19 @@ public class RegistrationController {
                               Model model) {
 
         userService.userRegistration(email, username, password, model);
-        return "redirect:/blog";
+        return "/users/messageActivateEmail";
     }
 
     @GetMapping("/activate/{code}")
     public String activate(@PathVariable String code,
                            Model model) {
         userService.isActivated(code,model);
-        return "/users/login";
+        return "users/messageIsActivatedEmail";
+    }
+
+
+    @GetMapping("/messageActivateEmail")
+    public String activateCodeMessageEmail() {
+        return "/users/messageActivateEmail";
     }
 }

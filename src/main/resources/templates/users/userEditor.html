@@ -9,16 +9,21 @@
 <header th:insert="blocks/header"></header>
 <div class="container mt-5">
     <h1>Редактор пользователей</h1>
+    <br>
+    <br>
     <div th:each="el : ${user}">
         <form th:action="@{'/user/'+${el.id}+'/edit'}" method="post" name="form">
-            Логин
-            <input type="text" th:value="${el.username}" name="username"  class="form-control"><br>
-            Пароль
-            <input type="text" th:value="${el.password}" name="password"  class="form-control"><br>
-            Email
-            <input type="text" th:value="${el.email}" name="email"  class="form-control"><br>
+            <div class="form-group col-md-3">Логин
+                <input type="text" th:value="${el.username}" name="username"  class="form-control">
+            </div><br>
+            <div class="form-group col-md-3">Пароль
+            <input type="text" th:value="${el.password}" name="password"  class="form-control">
+            </div><br>
+            <div class="form-group col-md-3">Email
+            <input type="text" th:value="${el.email}" name="email"  class="form-control">
+            </div><br>
 
-            <div>
+            <div class="form-group col-md-3">
                 <p3>Роли:</p3>
                 <br>
                 <div th:each="role : ${roles}">
@@ -27,7 +32,8 @@
                 </div>
             </div>
             <input type="hidden" th:value="${el.id}" name="userId"><br>
-            <button type="submit">Сохранить</button>
+            <button type="submit" class="btn btn-outline-success"
+                    style="position: relative; top: 0px; left: 10px;">Сохранить</button>
         </form>
     </div>
 </div>

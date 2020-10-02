@@ -39,20 +39,14 @@ public class UserService implements UserDetailsService {
             model.addAttribute("message", "Пользователь существует");
             return "users/registration";
         }
+
         user.setRoles(Collections.singleton(Role.User));
         user.setActive(false);
         user.setActivationCode(UUID.randomUUID().toString());
-        userRepository.save(user);
-        if (!StringUtils.isEmpty(user.getEmail())){
 
-            String message = String.format("Здравствуйте, %s! \n" + "Добро пожаловать! " +
-                            "Пожалуйста, перейдите по этой ссылке для потверждения регистрации, " +
-                            "http://localhost:8080/activate/%s",
-                    user.getUsername(),
-                    user.getActivationCode()
-            );
-            mailService.send(user.getEmail(), "Код активации", message);
-        }
+        sendMessage(user);
+        userRepository.save(user);
+
         return "redirect:/blog";
     }
 
@@ -82,7 +76,7 @@ public class UserService implements UserDetailsService {
         userRepository.save(user);
     }
 
-    public void isActivated(@PathVariable String code,
+    public void isActivated(String code,
                             Model model)
     {
         boolean isActivated = activateUser(code);
@@ -105,11 +99,7 @@ public class UserService implements UserDetailsService {
         model.addAttribute("roles", Role.values());
     }
 
-    public void userEditFormSave(@PathVariable(value = "id") long id,
-                                 @RequestParam String username,
-                                 @RequestParam String password,
-                                 @RequestParam String email,
-                                 @RequestParam(name = "roles", required = false) String[] role) {
+    public void userEditFormSave(long id, String username, String password, String email, String[] role) {
         User user = userRepository.findById(id).orElseThrow(IllegalAccessError::new);
         user.setUsername(username);
         user.setPassword(password);
@@ -122,6 +112,50 @@ public class UserService implements UserDetailsService {
         }
 
         userRepository.save(user);
+    }
+
+    public String userProfileSave(User user, String username, String password, String email) {
+
+        String userEmail = user.getEmail();
+
+        boolean isEmailChanged = (email != null && !email.equals(userEmail)) ||
+                (userEmail != null && !userEmail.equals(email));
+
+        if (isEmailChanged){
+            user.setEmail(email);
+            if (!StringUtils.isEmpty(email)){
+                user.setActivationCode(UUID.randomUUID().toString());
+            }
+            user.setActive(false);
+            sendMessage(user);
+        }
+
+        if (!StringUtils.isEmpty(password)){
+                user.setPassword(password);
+            }
+        if (!StringUtils.isEmpty(username)){
+            user.setUsername(username);
+        }
+
+        userRepository.save(user);
+        if (isEmailChanged){
+            return "/users/messageActivateEmail";
+        }
+        return "/users/profile";
+
+    }
+
+    public void sendMessage(User user){
+        if (!StringUtils.isEmpty(user.getEmail())){
+
+            String message = String.format("Здравствуйте, %s! \n" + "Добро пожаловать! " +
+                            "Пожалуйста, перейдите по этой ссылке для потверждения регистрации, " +
+                            "http://localhost:8080/activate/%s",
+                    user.getUsername(),
+                    user.getActivationCode()
+            );
+            mailService.send(user.getEmail(), "Код активации", message);
+        }
     }
 }
 

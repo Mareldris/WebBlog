@@ -1,0 +1,42 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Редактирование статьи</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+<header th:insert="blocks/header"></header>
+<br>
+<div align="center">
+    <h1>Профиль</h1>
+    <br>
+    <form th:action="'/user/'+${id}+'/profile'" method="post" >
+        <div class="form-group col-md-3">
+            <label for="inputEmail">Email</label>
+            <input type="email" name="email" class="form-control"  th:value="${email}"id="inputEmail"
+                   style="text-align: center">
+        </div>
+        <div class="form-group col-md-3">
+            <label for="inputPassword">Пароль</label>
+            <input type="password" name="password" class="form-control" th:value="${password}" id="inputPassword"
+                   style="text-align: center">
+        </div>
+        <div class="form-group col-md-3">
+            <label for="inputUsername">Логин</label>
+            <input type="username" name="username" class="form-control" th:value="${username}"
+                   style="text-align: center" id="inputUsername">
+        </div>
+
+
+        <br>
+        <br>
+        <button type="submit" class="btn btn-outline-success mr-3"
+                style="position: relative; top: 0px; left: 10px;">Сохранить</button>
+    </form>
+</div>
+</body>
+</html>
+
+
+
