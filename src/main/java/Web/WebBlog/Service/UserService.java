@@ -6,10 +6,10 @@ import Web.WebBlog.repositorys.UserRepository;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
 import org.springframework.util.StringUtils;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.*;
@@ -22,15 +22,18 @@ public class UserService implements UserDetailsService {
 
     private final MailService mailService;
 
-    public UserService(UserRepository userRepository, MailService mailService) {
+    private final PasswordEncoder passwordEncoder;
+
+    public UserService(UserRepository userRepository, MailService mailService, PasswordEncoder passwordEncoder) {
         this.userRepository = userRepository;
         this.mailService = mailService;
+        this.passwordEncoder = passwordEncoder;
     }
 
     public  String userRegistration(@RequestParam String email,
-                                          @RequestParam String username,
-                                          @RequestParam String password,
-                                          Model model) {
+                                    @RequestParam String username,
+                                    @RequestParam String password,
+                                    Model model) {
         
         User user = new User(email,username,password);
         User userFromDb = userRepository.findByUsername(user.getUsername());
@@ -43,6 +46,7 @@ public class UserService implements UserDetailsService {
         user.setRoles(Collections.singleton(Role.User));
         user.setActive(false);
         user.setActivationCode(UUID.randomUUID().toString());
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
 
         sendMessage(user);
         userRepository.save(user);

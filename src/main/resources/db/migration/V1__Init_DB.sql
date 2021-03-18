@@ -40,11 +40,11 @@ create table user_role
 
 
 alter table post
-    add constraint FK72mt33dhhs48hf9gcqrq4fxte
+    add constraint message_user_from_key
     foreign key (user_id)
     references user (id);
 
 alter table user_role
-    add constraint FK859n2jvi8ivhui0rl0esws6o
+    add constraint message_user_role_from_key
     foreign key (user_id)
     references user (id);

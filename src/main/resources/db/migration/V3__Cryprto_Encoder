@@ -1,0 +1,3 @@
+create table crypto(
+    password        varchar(255)
+)
